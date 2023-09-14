@@ -46,10 +46,10 @@ const BookList = () => {
       <div className="row">
         {/* instruction: list books using .map() */}
         {books.map((book) => (
-          <div className="col-4 my-5" key={book.title}>
+          <div className="col-lg-4 col-md-6 col-sm-12 my-5" key={book.title}>
             <div className="card">
               <img
-                src="../images/book.jpg"
+                src={"/images/" + book.image}
                 alt={book.title}
                 className="card-img-top"
               />
@@ -57,9 +57,10 @@ const BookList = () => {
                 <h2 className="card-title">{book.title}</h2>
                 <p className="card-text">Author: {book.author}</p>
                 <span>
-                  Category:
+                  {/* Category:
                   {book.categories.length > 0 &&
-                    `${book.categories.join(", ")}`}
+                    `${book.categories.join(", ")}`} */}
+                  Categories: {book.categories.join(", ")}
                 </span>
                 <p className="card-text">Year: {book.year}</p>
               </div>
