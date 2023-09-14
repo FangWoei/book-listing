@@ -1,33 +1,64 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { bookData } from "./data/book";
 const BookList = () => {
-  const [books, setBooks] = useState([]);
+  // const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState(bookData);
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  // retrieve the category options from the bookdata
   const categories = useMemo(() => {
     let options = [];
     bookData.forEach((book) => {
       book.categories.forEach((category) => {
+        // to make sure the category wasn't already in the options
         if (!options.includes(category)) {
           options.push(category);
         }
       });
     });
     return options;
-  }, []);
+  }, [bookData]);
+
+  // const categories = useMemo(() => {
+  //   let options = [];
+  //   bookData.forEach((book) => {
+  //     book.categories.forEach((category) => {
+  //       if (!options.includes(category)) {
+  //         options.push(category);
+  //       }
+  //     });
+  //   });
+  //   return options;
+  // }, []);
+
+  // useEffect(() => {
+  //   /* instruction: load books from the books data */
+  //   setBooks(bookData);
+  // }, []);
+
+  // useEffect(() => {
+  //   if (selectedCategory === "") {
+  //     setBooks(bookData);
+  //   } else {
+  //     const filteredBooks = bookData.filter((book) =>
+  //       book.categories.includes(selectedCategory)
+  //     );
+  //     setBooks(filteredBooks);
+  //   }
+  // }, [selectedCategory]);
+
   useEffect(() => {
-    /* instruction: load books from the books data */
-    setBooks(bookData);
-  }, []);
-  useEffect(() => {
-    if (selectedCategory === "") {
-      setBooks(bookData);
-    } else {
-      const filteredBooks = bookData.filter((book) =>
-        book.categories.includes(selectedCategory)
+    let newBooks = [...bookData];
+    /* Instruction: filter books by selectedCategory */
+    /* Instruction: set books to all books if selectedCategory is empty */
+    if (selectedCategory !== "") {
+      newBooks = newBooks.filter((b) =>
+        b.categories.includes(selectedCategory)
       );
-      setBooks(filteredBooks);
     }
-  }, [selectedCategory]);
+    /* Instruction: set filtered books to books state */
+    setBooks(newBooks);
+  }, [bookData, selectedCategory]);
 
   return (
     <div className="container">
@@ -71,4 +102,5 @@ const BookList = () => {
     </div>
   );
 };
+
 export default BookList;
